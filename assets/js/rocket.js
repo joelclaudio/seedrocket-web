@@ -8,7 +8,7 @@ function drawBody(){
     // set a fill and line style
     body.beginFill(0xFF3300);
 
-    body.drawEllipse(0,0, 50, 100)
+    body.drawEllipse(0,0, 40, 100)
 
     body.endFill()
 
@@ -28,7 +28,7 @@ function drawWindow(){
     return win;
 }
 
-function drawPad(reverse = false){
+function drawPad(reverseX = false){
     var pad = new PIXI.Graphics();
 
     path = [
@@ -39,7 +39,7 @@ function drawPad(reverse = false){
        0, 0,
     ]
 
-    if (reverse){
+    if (reverseX){
         path = path.map(function(value, index){
             if( index == 0 || (index % 2) == 0){
                 return value * -1;
@@ -48,8 +48,6 @@ function drawPad(reverse = false){
             }
         })
     }
-
-    console.log(path);
 
     pad.beginFill(0xFF9900);
 
@@ -69,11 +67,11 @@ stage.interactive = true;
 var rocket = new PIXI.Container();
 
 rightPad = drawPad();
-rightPad.position.x = 20
+rightPad.position.x = 18
 rightPad.position.y = 40
 
 leftPad = drawPad(true);
-leftPad.position.x = -20
+leftPad.position.x = -18
 leftPad.position.y = 40
 
 rocket.addChild(leftPad);
@@ -83,8 +81,6 @@ rocket.addChild(drawBody())
 win = drawWindow();
 win.position.y = -50;
 rocket.addChild(win);
-
-
 
 
 stage.addChild(rocket);
