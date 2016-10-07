@@ -28,7 +28,7 @@ function drawWindow(){
     return win;
 }
 
-function drawPad(){
+function drawPad(reverse = false){
     var pad = new PIXI.Graphics();
 
     path = [
@@ -39,7 +39,19 @@ function drawPad(){
        0, 0,
     ]
 
-    pad.beginFill(0xFF0000);
+    if (reverse){
+        path = path.map(function(value, index){
+            if( index == 0 || (index % 2) == 0){
+                return value * -1;
+            }else{
+                return value
+            }
+        })
+    }
+
+    console.log(path);
+
+    pad.beginFill(0xFF9900);
 
     pad.drawPolygon(path)
 
@@ -56,14 +68,24 @@ stage.interactive = true;
 
 var rocket = new PIXI.Container();
 
-pad = drawPad();
+rightPad = drawPad();
+rightPad.position.x = 20
+rightPad.position.y = 40
 
-//rocket.addChild(drawBody())
+leftPad = drawPad(true);
+leftPad.position.x = -20
+leftPad.position.y = 40
+
+rocket.addChild(leftPad);
+rocket.addChild(rightPad);
+
+rocket.addChild(drawBody())
 win = drawWindow();
 win.position.y = -50;
-//rocket.addChild(win);
+rocket.addChild(win);
 
-rocket.addChild(pad);
+
+
 
 stage.addChild(rocket);
 
